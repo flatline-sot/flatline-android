@@ -9,6 +9,10 @@
 
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <string name="flat_setup_name">Flatline Setup</string>
+    <string name="flat_name_hint">Enter a flat name!</string>
+    <string name="number_of_people_hint">How many people?</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="flat_setup_title">Set Up Flat</string>
 </resources>
