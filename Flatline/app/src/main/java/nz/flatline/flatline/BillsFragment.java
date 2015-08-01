@@ -1,8 +1,6 @@
 package nz.flatline.flatline;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,19 +22,17 @@ import java.util.List;
  * Use the {@link BillsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BillsFragment extends Fragment {
-
+public class BillsFragment extends HomepageFragment {
 
     private final List<Bill> MOCK_DATA = new ArrayList<Bill>(){{
-        add(new Bill("$24.39", "Powershop", "$97.58","7/08/15", new ArrayList<Drawable>()));
-        add(new Bill("$27.25", "Vodafone", "$109.00","15/08/15", new ArrayList<Drawable>()));
+        add(new Bill("$24.39", "Powershop", "$97.58 total due","7/08/15", new ArrayList<Drawable>()));
+        add(new Bill("$27.25", "Vodafone", "$109.00 total due","15/08/15", new ArrayList<Drawable>()));
     }};
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-
-    private OnFragmentInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -44,8 +40,8 @@ public class BillsFragment extends Fragment {
      *
      * @return A new instance of fragment BillsFragment.
      */
-    public static Fragment newInstance() {
-        BillsFragment fragment = new BillsFragment();
+    public static HomepageFragment newInstance() {
+        HomepageFragment fragment = new BillsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -53,14 +49,6 @@ public class BillsFragment extends Fragment {
 
     public BillsFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //get arguments
-        }
     }
 
     @Override
@@ -85,45 +73,6 @@ public class BillsFragment extends Fragment {
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
     public class Bill{
         protected String youOwe;
         protected String company;
@@ -143,11 +92,8 @@ public class BillsFragment extends Fragment {
     public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.BillViewHolder> {
         private List<Bill> billsList;
 
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
         public class BillViewHolder extends RecyclerView.ViewHolder {
-            // each data item is just a string in this case
+
             protected TextView youOweTextView;
             protected TextView companyTextView;
             protected TextView totalDueTextView;

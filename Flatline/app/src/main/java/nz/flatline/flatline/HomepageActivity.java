@@ -1,5 +1,6 @@
 package nz.flatline.flatline;
 
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,9 +16,7 @@ import android.view.MenuItem;
 import java.util.Locale;
 
 public class HomepageActivity extends AppCompatActivity implements ActionBar.TabListener,
-        BillsFragment.OnFragmentInteractionListener,
-        NoticesFragment.OnFragmentInteractionListener,
-        ShoppingListFragment.OnFragmentInteractionListener {
+        HomepageFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -41,6 +40,9 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.flatline_blue)));
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.flatline_blue)));
+
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the adapter that will return a fragment for each of the three
