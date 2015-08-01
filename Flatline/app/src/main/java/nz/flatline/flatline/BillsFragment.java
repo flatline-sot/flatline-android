@@ -1,6 +1,7 @@
 package nz.flatline.flatline;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,6 +27,10 @@ import android.view.ViewGroup;
 public class BillsFragment extends Fragment {
 
 
+    private final List<Bill> MOCK_DATA = new ArrayList<Bill>(){{
+        add(new Bill("$24.39", "Powershop", "$97.58","7/08/15", new ArrayList<Drawable>()));
+        add(new Bill("$27.25", "Vodafone", "$109.00","15/08/15", new ArrayList<Drawable>()));
+    }};
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -52,7 +61,15 @@ public class BillsFragment extends Fragment {
         if (getArguments() != null) {
             //get arguments
         }
-        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.bills_recycler_view);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_bills, container, false);
+
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.bills_recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -63,15 +80,9 @@ public class BillsFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new BillsAdapter(null);
+        mAdapter = new BillsAdapter(MOCK_DATA);
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bills, container, false);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -113,23 +124,76 @@ public class BillsFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    private class BillsAdapter extends RecyclerView.Adapter {
-        public BillsAdapter(Object p0) {
+    public class Bill{
+        protected String youOwe;
+        protected String company;
+        protected String totalDue;
+        protected String dateDue;
+        protected List<Drawable> flatmatesBilled;
+
+        public Bill(String youOwe, String company, String totalDue, String dateDue, List<Drawable> flatmatesBilled) {
+            this.company = company;
+            this.dateDue = dateDue;
+            this.flatmatesBilled = flatmatesBilled;
+            this.totalDue = totalDue;
+            this.youOwe = youOwe;
+        }
+    }
+
+    public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.BillViewHolder> {
+        private List<Bill> billsList;
+
+        // Provide a reference to the views for each data item
+        // Complex data items may need more than one view per item, and
+        // you provide access to all the views for a data item in a view holder
+        public class BillViewHolder extends RecyclerView.ViewHolder {
+            // each data item is just a string in this case
+            protected TextView youOweTextView;
+            protected TextView companyTextView;
+            protected TextView totalDueTextView;
+            protected TextView dateDue;
+
+            public BillViewHolder(View v) {
+                super(v);
+                youOweTextView =  (TextView) v.findViewById(R.id.you_owe);
+                companyTextView = (TextView)  v.findViewById(R.id.company);
+                totalDueTextView = (TextView)  v.findViewById(R.id.total_due);
+                dateDue = (TextView) v.findViewById(R.id.date_due);
+            }
+        }
+
+        public BillsAdapter(List<Bill> bills) {
+            billsList = bills;
+        }
+
+        // Create new views (invoked by the layout manager)
+        @Override
+        public BillViewHolder onCreateViewHolder(ViewGroup parent,
+                                                       int viewType) {
+            // create a new view
+            View billCardView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.bill_card, parent, false);
+            // set the view's size, margins, paddings and layout parameters
+
+            return new BillViewHolder(billCardView);
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            return null;
+        public void onBindViewHolder(BillViewHolder billViewHolder, int position) {
+
+            Bill bill = billsList.get(position);
+
+            billViewHolder.youOweTextView.setText(bill.youOwe);
+            billViewHolder.companyTextView.setText(bill.company);
+            billViewHolder.totalDueTextView.setText(bill.totalDue);
+            billViewHolder.dateDue.setText(bill.dateDue);
+
         }
 
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-
-        }
-
+        // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
-            return 0;
+            return billsList.size();
         }
     }
 }
