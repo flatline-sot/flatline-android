@@ -9,4 +9,7 @@
     <dimen name="text_size">20sp</dimen>
     <dimen name="flatline_logo_text_size">74sp</dimen>
     <dimen name="edittext_width">175dp</dimen>
+    <dimen name="logo_text_margin">-30dp</dimen>
+    <dimen name="logo_width">250dp</dimen>
+    <dimen name="logo_padding_left">7dp</dimen>
 </resources>
