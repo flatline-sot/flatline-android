@@ -19,4 +19,8 @@
     <string name="flat_setup_title">Set Up Flat</string>
     <string name="title_activity_powershop_sign_in">PowershopSignInActivity</string>
     <string name="connect_with_powershop">Connect with Powershop</string>
+    <string name="not_paid">Not paid</string>
+    <string name="paid">Paid</string>
+    <string name="dialog_title">Have you paid this bill?</string>
+    <string name="dialog_message">This is the message</string>
 </resources>

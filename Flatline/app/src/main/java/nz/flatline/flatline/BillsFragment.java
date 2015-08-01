@@ -1,10 +1,13 @@
 package nz.flatline.flatline;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import nz.flatline.flatline.tools.RecyclerItemClickListener;
 
 
 /**
@@ -58,6 +63,15 @@ public class BillsFragment extends HomepageFragment {
         View v = inflater.inflate(R.layout.fragment_bills, container, false);
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.bills_recycler_view);
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Log.i("RecyclerView", "item clicked, postion:"+position);
+                        buildAlert(view, position);
+                    }
+                })
+        );
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -71,6 +85,26 @@ public class BillsFragment extends HomepageFragment {
         mAdapter = new BillsAdapter(MOCK_DATA);
         mRecyclerView.setAdapter(mAdapter);
         return v;
+    }
+
+    private void buildAlert(View view, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_title);
+        // Add the buttons
+        builder.setPositiveButton(R.string.paid, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Mark as paid
+            }
+        });
+        builder.setNegativeButton(R.string.not_paid, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // leave as not paid
+            }
+        });
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public class Bill{
@@ -119,6 +153,7 @@ public class BillsFragment extends HomepageFragment {
             // create a new view
             View billCardView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.bill_card, parent, false);
+
             // set the view's size, margins, paddings and layout parameters
 
             return new BillViewHolder(billCardView);
