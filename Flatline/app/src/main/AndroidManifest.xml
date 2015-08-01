@@ -10,13 +10,13 @@
         <activity
             android:name=".HomepageActivity"
             android:label="@string/app_name" >
-        </activity>
-        <activity android:name=".FlatSetupActivity"
-            android:label="@string/flat_setup_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".FlatSetupActivity"
+            android:label="@string/flat_setup_name">
         </activity>
     </application>
 
