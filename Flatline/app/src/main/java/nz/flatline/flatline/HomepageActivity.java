@@ -1,22 +1,20 @@
 package nz.flatline.flatline;
 
-import java.util.Locale;
-
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import java.util.Locale;
 
 public class HomepageActivity extends AppCompatActivity implements ActionBar.TabListener {
 
@@ -127,7 +125,15 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0:
+                    return BillsFragment.newInstance();
+                case 1:
+                    return NoticesFragment.newInstance();
+                case 2:
+                    return ShoppingListFragment.newInstance();
+            }
+            return null;
         }
 
         @Override
@@ -141,11 +147,11 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return getString(R.string.title_bills).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return getString(R.string.title_notices).toUpperCase(l);
                 case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+                    return getString(R.string.title_shopping_list).toUpperCase(l);
             }
             return null;
         }
@@ -183,5 +189,7 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
             return rootView;
         }
     }
+
+
 
 }
