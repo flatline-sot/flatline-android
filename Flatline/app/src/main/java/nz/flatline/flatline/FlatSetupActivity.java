@@ -2,14 +2,13 @@ package nz.flatline.flatline;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
 /**
  * Created by Mayur on 1/08/2015.
  */
-public class FlatSetupActivity extends ActionBarActivity {
+public class FlatSetupActivity extends Activity {
 
     Button submitButton, backButton;
     TextView actionBarText;

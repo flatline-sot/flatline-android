@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/flatline_pale_brown">
 
+    <include layout="@layout/action_bar_layout"/>
+
         <EditText
             android:textSize="@dimen/text_size"
             android:layout_margin="@dimen/edit_text_margin"

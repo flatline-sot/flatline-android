@@ -5,25 +5,25 @@
     android:id="@+id/bill_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/primary_material_dark"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="2dp"
     android:layout_margin="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:padding="5dp"
-        android:background="@color/background_floating_material_light">
+        android:padding="10dp"
+        android:background="@color/flatline_off_white">
 
         <TextView
             android:id="@+id/you_owe"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:text="$25.00"
+            android:textColor="@color/flatline_pink"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textSize="14sp"/>
+            android:textSize="26sp"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -33,30 +33,30 @@
 
             <TextView
                 android:id="@+id/company"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:text="Powershop"
+                android:textColor="@color/flatline_pink"
                 android:gravity="center_vertical"
-                android:textSize="10sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/total_due"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:text="$100 due"
+                android:textColor="@color/flatline_pink"
                 android:gravity="center_vertical"
-                android:textSize="10sp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/date_due"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:text="21/8/15"
+                android:textColor="@color/flatline_pink"
                 android:gravity="center_vertical"
-                android:textSize="10sp"/>
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
@@ -64,10 +64,11 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="right">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -75,32 +76,32 @@
                     android:id="@+id/icon1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/abc_ic_search_api_mtrl_alpha"/>
+                    android:src="@drawable/abc_btn_check_material"/>
 
                 <ImageView
                     android:id="@+id/icon2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/abc_ic_search_api_mtrl_alpha"/>
+                    android:src="@drawable/abc_btn_check_material"/>
 
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/icon3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/abc_ic_search_api_mtrl_alpha"/>
+                    android:src="@drawable/abc_btn_check_material"/>
 
 
                 <ImageView
                     android:id="@+id/icon4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/abc_ic_search_api_mtrl_alpha"/>
+                    android:src="@drawable/abc_btn_check_material"/>
 
 
             </LinearLayout>

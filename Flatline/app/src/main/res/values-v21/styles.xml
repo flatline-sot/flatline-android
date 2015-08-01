@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:colorControlNormal">#a6a29e</item>
+        <item name="android:colorControlHighlight">@color/flatline_blue</item>
+    </style>
+
+    <style name="PrimaryButton" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@color/flatline_blue</item>
+    </style>
+</resources>
