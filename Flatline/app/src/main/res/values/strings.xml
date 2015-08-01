@@ -15,5 +15,8 @@
     <string name="flat_name_hint">flat name</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="flat_setup_title">Set Up Flat</string>
+    <string name="title_activity_powershop_sign_in">PowershopSignInActivity</string>
+    <string name="connect_with_powershop">Connect with Powershop</string>
 </resources>
