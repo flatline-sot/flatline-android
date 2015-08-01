@@ -43,7 +43,7 @@ public class FlatSetupActivity extends Activity implements View.OnClickListener{
         } else if(TextUtils.isEmpty(flat_name.getText())) {
             Toast.makeText(FlatSetupActivity.this, "Please enter a flat name!", Toast.LENGTH_SHORT).show();
         } else {
-            startActivity(new Intent(FlatSetupActivity.this, HomepageActivity.class));
+            startActivity(new Intent(this, HomepageActivity.class));
         }
     }
 }
