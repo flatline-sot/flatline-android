@@ -1,8 +1,11 @@
 package nz.flatline.flatline;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -35,6 +38,12 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean hasFlat = prefs.getBoolean("FLAT_EXISTS", false);
+        if(!hasFlat){
+            startActivity(new Intent(this, FlatSetupActivity.class));
+            finish();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
