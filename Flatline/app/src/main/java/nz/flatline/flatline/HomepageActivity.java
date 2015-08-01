@@ -1,5 +1,6 @@
 package nz.flatline.flatline;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,7 +17,7 @@ import android.view.ViewGroup;
 
 import java.util.Locale;
 
-public class HomepageActivity extends AppCompatActivity implements ActionBar.TabListener {
+public class HomepageActivity extends AppCompatActivity implements ActionBar.TabListener, BillsFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -109,6 +110,11 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

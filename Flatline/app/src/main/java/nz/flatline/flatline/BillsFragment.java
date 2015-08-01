@@ -63,7 +63,7 @@ public class BillsFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new BillsAdapter(myDataset);
+        mAdapter = new BillsAdapter(null);
         mRecyclerView.setAdapter(mAdapter);
     }
 

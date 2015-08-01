@@ -5,4 +5,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <color name="flatline_pale_brown">#debf9e</color>
+    <color name="flatline_blue">#3696ad</color>
+    <color name="flatline_pink">#e16386</color>
+    <color name="flatline_off_white">#fff9f3</color>
+    <color name="flatline_title">#c7d0d1</color>
+    <color name="flatline_fade_title">#b3bbbc</color>
+
 </resources>
