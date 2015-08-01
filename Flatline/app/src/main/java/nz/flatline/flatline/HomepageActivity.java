@@ -101,6 +101,11 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if ( id == R.id.action_clear_flat){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.edit().putBoolean("FLAT_EXISTS", false).commit();
+            finish();
+            startActivity(new Intent(this, HomepageActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
