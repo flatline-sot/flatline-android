@@ -12,7 +12,7 @@ import android.widget.TextView;
 public class FlatSetupActivityTest extends ActivityInstrumentationTestCase2<FlatSetupActivity>{
 
     private Button submitButton;
-    private EditText name, flat_name;
+    private EditText flat_name;
     private TextView title;
     private FlatSetupActivity main;
 
@@ -42,7 +42,6 @@ public class FlatSetupActivityTest extends ActivityInstrumentationTestCase2<Flat
 
     private void initializeViews() {
         main = getActivity();
-        name = (EditText) main.findViewById(R.id.name);
         flat_name = (EditText) main.findViewById(R.id.flat_name);
         submitButton = (Button) main.findViewById(R.id.submit_button);
         title = (TextView) main.findViewById(R.id.flat_setup_title);

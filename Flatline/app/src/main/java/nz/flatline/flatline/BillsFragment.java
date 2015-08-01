@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -91,13 +92,18 @@ public class BillsFragment extends HomepageFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.dialog_title);
         // Add the buttons
+        final View v = view;
         builder.setPositiveButton(R.string.paid, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                ImageView icon = (ImageView) v.findViewById(R.id.icon1);
+                icon.setImageResource(R.drawable.abc_btn_check_to_on_mtrl_015);
                 // Mark as paid
             }
         });
         builder.setNegativeButton(R.string.not_paid, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                ImageView icon = (ImageView) v.findViewById(R.id.icon1);
+                icon.setImageResource(R.drawable.abc_btn_check_material);
                 // leave as not paid
             }
         });
