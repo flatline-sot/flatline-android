@@ -3,8 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="action_bar_elevation">4dp</dimen>
-    <dimen name="edit_text_margin">15dp</dimen>
-    <dimen name="button_margins">10dp</dimen>
+    <dimen name="edit_text_margin">5dp</dimen>
+    <dimen name="button_margins">5dp</dimen>
     <dimen name="button_elevation">4dp</dimen>
-    <dimen name="text_size">30sp</dimen>
+    <dimen name="text_size">20sp</dimen>
+    <dimen name="flatline_logo_text_size">74sp</dimen>
+    <dimen name="edittext_width">175dp</dimen>
 </resources>

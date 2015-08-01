@@ -5,59 +5,81 @@
     android:layout_height="match_parent"
     android:background="@color/flatline_pale_brown">
 
-    <include layout="@layout/action_bar_layout"/>
-
-        <EditText
-            android:textSize="@dimen/text_size"
-            android:layout_margin="@dimen/edit_text_margin"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/flat_name"
-            android:hint="@string/flat_name_hint"
-            android:layout_weight="0"/>
-
-        <EditText
-            android:textSize="@dimen/text_size"
-            android:layout_margin="@dimen/edit_text_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="@string/number_of_people_hint"
-            android:id="@+id/flat_number"
-            android:layout_weight="0"
-            />
-
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_gravity="center|bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/flatline_blue"
+        android:gravity="center">
 
-        <Button
-            android:elevation="@dimen/button_elevation"
-            android:layout_weight="1"
-            android:layout_margin="@dimen/button_margins"
-            android:text="back"
+        <TextView
+            android:textSize="@dimen/flatline_logo_text_size"
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_marginBottom="-30dp"
+            android:textColor="@color/flatline_fade_title"
+            />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/flatline_fade_title"
-            android:background="@color/flatline_off_white"
-            android:layout_gravity="bottom"
-            android:id="@+id/back_button"/>
+            android:layout_gravity="center"
+            android:src="@drawable/flatlinelogo"
+            android:maxWidth="250dp"
+            android:adjustViewBounds="true"
+            android:paddingLeft="7dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.75"
+        android:gravity="center"
+        android:background="@color/flatline_off_white">
+
+        <EditText
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/edit_text_margin"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="wrap_content"
+            android:id="@+id/flat_name"
+            android:hint="@string/name_hint" />
+
+        <EditText
+            android:textSize="@dimen/text_size"
+            android:layout_margin="@dimen/edit_text_margin"
+            android:layout_width="@dimen/edittext_width"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="@string/flat_name_hint"
+            android:id="@+id/flat_number" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_gravity="center|bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom|end"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/flatline_off_white">
 
         <Button
             android:elevation="@dimen/button_elevation"
-            android:layout_weight="1"
             android:layout_margin="@dimen/button_margins"
             android:background="@color/flatline_blue"
             android:textColor="@color/flatline_off_white"
             android:text="submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:id="@+id/submit_button"/>
+            android:id="@+id/submit_button" />
     </LinearLayout>
 
 

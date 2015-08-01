@@ -1,7 +1,11 @@
 package nz.flatline.flatline;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,12 +22,9 @@ public class FlatSetupActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flat_setup);
         initializeViews();
-        actionBarText.setText(R.string.flat_setup_title);
     }
 
     private void initializeViews() {
         submitButton = (Button) findViewById(R.id.submit_button);
-        backButton = (Button) findViewById(R.id.back_button);
-        actionBarText = (TextView) findViewById(R.id.action_bar_title);
     }
 }
