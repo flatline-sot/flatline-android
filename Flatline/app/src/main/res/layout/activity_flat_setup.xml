@@ -47,7 +47,7 @@
             android:layout_margin="@dimen/edit_text_margin"
             android:layout_width="@dimen/edittext_width"
             android:layout_height="wrap_content"
-            android:id="@+id/flat_name"
+            android:id="@+id/name"
             android:hint="@string/name_hint" />
 
         <EditText
@@ -55,9 +55,8 @@
             android:layout_margin="@dimen/edit_text_margin"
             android:layout_width="@dimen/edittext_width"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
             android:hint="@string/flat_name_hint"
-            android:id="@+id/flat_number" />
+            android:id="@+id/flat_name" />
 
     </LinearLayout>
 
