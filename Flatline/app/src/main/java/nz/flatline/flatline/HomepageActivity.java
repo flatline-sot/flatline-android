@@ -54,7 +54,7 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        powershopSignInService = new PowershopSignInService(this);
+        powershopSignInService = new PowershopSignInService(1, this);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
