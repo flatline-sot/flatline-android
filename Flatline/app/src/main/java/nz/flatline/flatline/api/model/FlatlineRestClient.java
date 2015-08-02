@@ -13,8 +13,11 @@ import java.lang.reflect.Type;
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
 import retrofit.converter.GsonConverter;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 
+import retrofit.http.POST;
 import retrofit.http.Path;
 import rx.Observable;
 
@@ -33,6 +36,10 @@ public class FlatlineRestClient {
         @GET("/bill/{id}/")
         Observable<Bill> bill(
                 @Path("id") int id);
+
+        @POST("/flat/{id}/post_access_tokens/")
+        @FormUrlEncoded
+        Observable<Okay> postAccessTokens(@Path("id" )int id, @Field("token") String token, @Field("secret") String secret);
     }
 
     public Flatline getFlatLineAPI() {
