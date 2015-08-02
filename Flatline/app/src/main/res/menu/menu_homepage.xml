@@ -3,4 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".HomepageActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_profile" android:title="@string/action_profile"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_clear_flat" android:title="@string/action_clear_flat"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

@@ -2,10 +2,10 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat">
-        <item name="android:actionBarTabBarStyle">@style/MyTabStyle</item>
+        <item name="android:actionBarTabStyle">@style/MyTabStyle</item>
     </style>
 
-    <style name="MyTabStyle" parent="Widget.AppCompat.ActionBar.TabBar">
+    <style name="MyTabStyle" parent="Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/flatline_blue_d</item>
     </style>
 

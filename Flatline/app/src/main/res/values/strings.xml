@@ -23,4 +23,6 @@
     <string name="paid">Paid</string>
     <string name="dialog_title">Have you paid this bill?</string>
     <string name="dialog_message">This is the message</string>
+    <string name="action_profile">My Profile</string>
+    <string name="action_clear_flat">Leave flat</string>
 </resources>

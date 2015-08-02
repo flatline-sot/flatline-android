@@ -5,6 +5,12 @@
         <!-- Customize your theme here. -->
         <item name="android:colorControlNormal">#a6a29e</item>
         <item name="android:colorControlHighlight">@color/flatline_blue</item>
+        <item name="android:actionBarTabStyle">@style/MyTabStyle</item>
+
+    </style>
+
+    <style name="MyTabStyle" parent="Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/flatline_blue_d</item>
     </style>
 
     <style name="PrimaryButton" parent="Theme.AppCompat.Light.DarkActionBar">
