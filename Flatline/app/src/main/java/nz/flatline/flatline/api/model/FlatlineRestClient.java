@@ -34,7 +34,7 @@ public class FlatlineRestClient {
     }
 
     public interface Flatline {
-        @GET("/bill/{id}/")
+        @GET("/flat/{id}/bills/")
         Observable<List<Bill>> bill(
                 @Path("id") int id);
 

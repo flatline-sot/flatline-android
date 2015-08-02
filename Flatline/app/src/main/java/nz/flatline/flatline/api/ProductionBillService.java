@@ -1,14 +1,15 @@
 package nz.flatline.flatline.api;
 
 
-import java.util.ArrayList;
+import android.util.Log;
+
 import java.util.List;
 
 import nz.flatline.flatline.api.model.Bill;
 import nz.flatline.flatline.api.model.BillService;
 import nz.flatline.flatline.api.model.BillUI;
 import nz.flatline.flatline.api.model.FlatlineRestClient;
-import rx.functions.Action1;
+import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
 public class ProductionBillService implements BillService {
@@ -24,13 +25,23 @@ public class ProductionBillService implements BillService {
     @Override
     public void requestBillData() {
 
-        flatlineRestClient.getFlatLineAPI().bill(1).subscribeOn(Schedulers.io())
-                .subscribe(new Action1<List<Bill>>() {
-                               @Override
-                               public void call(List<Bill> bills) {
-                                   billUI.onBillsReceived(bills);
-                               }
-                           });
+        flatlineRestClient.getFlatLineAPI().bill(1).observeOn(Schedulers.io())
+                .subscribe(new Subscriber<List<Bill>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("Flatline", e.getLocalizedMessage());
+                    }
+
+                    @Override
+                    public void onNext(List<Bill> bills) {
+                        billUI.onBillsReceived(bills);
+                    }
+                });
 
     }
 }

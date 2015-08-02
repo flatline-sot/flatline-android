@@ -3,16 +3,13 @@ package nz.flatline.flatline.oauth;
 import android.util.Log;
 
 import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.DefaultApi10a;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Response;
 import org.scribe.model.Token;
-import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
 import nz.flatline.flatline.api.model.FlatlineRestClient;
 import nz.flatline.flatline.api.model.Okay;
+import nz.flatline.flatline.tools.AppConstants;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -22,7 +19,7 @@ public class PowershopSignInService implements OAuthSignInService {
 
     private int flatID;
 
-    FlatlineRestClient flatLineRestAPI = new FlatlineRestClient("http://104.131.91.223:8000/api");
+    FlatlineRestClient flatLineRestAPI = new FlatlineRestClient(AppConstants.API_URL);
 
     private OAuthSignInUI oAuthSignInUI;
 

@@ -19,7 +19,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import nz.flatline.flatline.api.ProductionBillService;
 import nz.flatline.flatline.api.model.Bill;
+import nz.flatline.flatline.api.model.BillService;
 import nz.flatline.flatline.api.model.BillUI;
 import nz.flatline.flatline.tools.AppConstants;
 import nz.flatline.flatline.tools.RecyclerItemClickListener;
@@ -35,6 +37,7 @@ import nz.flatline.flatline.tools.RecyclerItemClickListener;
  */
 public class BillsFragment extends HomepageFragment implements BillUI{
 
+    private BillService prodBillService = new ProductionBillService(this, AppConstants.API_URL);
 
     private final List<BillModel> MOCK_DATA = new ArrayList<BillModel>(){{
         add(new BillModel("$24.39", "Powershop", "$97.58 total due","7/08/15", new ArrayList<Drawable>()));
@@ -76,7 +79,7 @@ public class BillsFragment extends HomepageFragment implements BillUI{
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         boolean connectedToPowershop = prefs.getBoolean(AppConstants.POWERSHOP_CONNECTED, false);
 
-        if (!connectedToPowershop) { //flat not connected to powershop
+        if (false) { //flat not connected to powershop
             mRecyclerView.setVisibility(View.GONE);
             powershopButton.setVisibility(View.VISIBLE);
             powershopButton.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +89,8 @@ public class BillsFragment extends HomepageFragment implements BillUI{
                     homepageActivity.powershopSignInService.requestAuthorizationURL();
                 }
             });
+        }else{
+            prodBillService.requestBillData();
         }
 
         mRecyclerView.addOnItemTouchListener(
@@ -130,11 +135,21 @@ public class BillsFragment extends HomepageFragment implements BillUI{
     }
 
     @Override
-    public void onBillsReceived(List<Bill> bills) {
-        mAdapter = new BillsAdapter(bills);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setVisibility(View.VISIBLE);
-        powershopButton.setVisibility(View.GONE);
+    public void onBillsReceived(final List<Bill> bills) {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (Bill b : bills) {
+                    Log.d("BillsRecieving", String.valueOf(b.cost));
+                }
+                mAdapter = new BillsAdapter(new ArrayList<Bill>(bills));
+                mRecyclerView.setAdapter(mAdapter);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                powershopButton.setVisibility(View.GONE);
+            }
+        });
+
 
     }
 
