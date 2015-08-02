@@ -8,4 +8,5 @@ public class AppConstants {
     public static final String FLAT_ID = "FLAT_ID";
     public static final String POWERSHOP_CONNECTED = "POWERSHOP_CONNECTED";
     public static final String API_URL = "http://104.131.91.223:8000/api";
+    public static final String DOLLAR = "$";
 }

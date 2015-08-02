@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -114,18 +115,20 @@ public class BillsFragment extends HomepageFragment implements BillUI{
         return v;
     }
 
-    private void buildAlert(View view, int position) {
+    private void buildAlert(final View view, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.dialog_title);
         // Add the buttons
         builder.setPositiveButton(R.string.paid, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // Mark as paid
+                ImageView icon1 = (ImageView) view.findViewById(R.id.icon1);
+                icon1.setImageResource(R.drawable.abc_btn_check_to_on_mtrl_015);
             }
         });
         builder.setNegativeButton(R.string.not_paid, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // leave as not paid
+                ImageView icon1 = (ImageView) view.findViewById(R.id.icon1);
+                icon1.setImageResource(R.drawable.abc_btn_check_to_on_mtrl_000);
             }
         });
 
@@ -210,9 +213,9 @@ public class BillsFragment extends HomepageFragment implements BillUI{
 
             Bill bill = billsList.get(position);
 
-            billViewHolder.youOweTextView.setText(String.valueOf(bill.costPerUser));
+            billViewHolder.youOweTextView.setText(AppConstants.DOLLAR.concat(String.valueOf(bill.costPerUser)));
             billViewHolder.companyTextView.setText("Powershop");
-            billViewHolder.totalDueTextView.setText(String.valueOf(bill.cost));
+            billViewHolder.totalDueTextView.setText(AppConstants.DOLLAR.concat(String.valueOf(bill.cost)));
             billViewHolder.dateDue.setText(bill.getReadableEndDate());
 
         }
