@@ -20,6 +20,27 @@
         <activity android:name=".FlatSetupActivity"
             android:label="@string/flat_setup_name">
         </activity>
+
+        <activity
+            android:name=".oauth.PowershopSignInActivity"
+            android:exported="true"
+            android:label="@string/title_activity_powershop_sign_in"
+            android:launchMode="singleTop">
+
+            <!-- Allows the launching of this activity from the browser. Used for the OAuth Callback ! -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="flatline-sot.tk"
+                    android:path="/oauth_callback"
+                    android:scheme="flatline" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
