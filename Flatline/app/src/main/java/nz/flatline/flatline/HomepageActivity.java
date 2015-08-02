@@ -18,8 +18,12 @@ import android.view.MenuItem;
 
 import java.util.Locale;
 
+import nz.flatline.flatline.oauth.OAuthSignInService;
+import nz.flatline.flatline.oauth.OAuthSignInUI;
+import nz.flatline.flatline.oauth.PowershopSignInService;
+
 public class HomepageActivity extends AppCompatActivity implements ActionBar.TabListener,
-        HomepageFragment.OnFragmentInteractionListener {
+        HomepageFragment.OnFragmentInteractionListener, OAuthSignInUI {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,6 +40,8 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
      */
     ViewPager mViewPager;
 
+    public OAuthSignInService powershopSignInService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -46,6 +52,8 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+        powershopSignInService = new PowershopSignInService(this);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -84,6 +92,20 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        Uri uri = intent.getData();
+        // check if the request was request using our oauth callback uri
+        if (uri != null && uri.toString().startsWith("flatline://flatline-sot.tk/oauth_callback")) {
+            String oAuthVerifier = uri.getQueryParameter("oauth_verifier");
+
+
+            // pass it on to service to handle
+            powershopSignInService.onTokenVerification(oAuthVerifier);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,6 +152,13 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onReceiveAuthorizationURL(String authorizationURL) {
+        // redirect user to their browser where they can log in to powershop
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(authorizationURL));
+        startActivity(browserIntent);
     }
 
     /**

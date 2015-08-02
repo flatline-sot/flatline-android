@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import nz.flatline.flatline.tools.RecyclerItemClickListener;
  * create an instance of this fragment.
  */
 public class BillsFragment extends HomepageFragment {
+
 
     private final List<Bill> MOCK_DATA = new ArrayList<Bill>(){{
         add(new Bill("$24.39", "Powershop", "$97.58 total due","7/08/15", new ArrayList<Drawable>()));
@@ -62,28 +64,43 @@ public class BillsFragment extends HomepageFragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bills, container, false);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.bills_recycler_view);
-        mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Log.i("RecyclerView", "item clicked, postion:"+position);
-                        buildAlert(view, position);
-                    }
-                })
-        );
+        if(false){ //flat not connected to powershop
+            v.findViewById(R.id.bills_recycler_view).setVisibility(View.GONE);
+            Button connectButton = (Button) v.findViewById(R.id.connect_with_powershop);
+            connectButton.setVisibility(View.VISIBLE);
+            connectButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HomepageActivity homepageActivity =(HomepageActivity)getActivity();
+                    homepageActivity.powershopSignInService.requestAuthorizationURL();
+                }
+            });
+        }else {
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView = (RecyclerView) v.findViewById(R.id.bills_recycler_view);
+            mRecyclerView.addOnItemTouchListener(
+                    new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Log.i("RecyclerView", "item clicked, postion:" + position);
+                            buildAlert(view, position);
+                        }
+                    })
+            );
 
-        // specify an adapter (see also next example)
-        mAdapter = new BillsAdapter(MOCK_DATA);
-        mRecyclerView.setAdapter(mAdapter);
+            // use this setting to improve performance if you know that changes
+            // in content do not change the layout size of the RecyclerView
+            mRecyclerView.setHasFixedSize(true);
+
+            // use a linear layout manager
+            mLayoutManager = new LinearLayoutManager(this.getActivity());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            // specify an adapter (see also next example)
+            mAdapter = new BillsAdapter(MOCK_DATA);
+            mRecyclerView.setAdapter(mAdapter);
+        }
         return v;
     }
 
@@ -107,7 +124,7 @@ public class BillsFragment extends HomepageFragment {
         dialog.show();
     }
 
-    public class Bill{
+    private class Bill{
         protected String youOwe;
         protected String company;
         protected String totalDue;
