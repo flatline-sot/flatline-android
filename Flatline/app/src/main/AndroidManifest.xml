@@ -8,13 +8,28 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".HomepageActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="flatline-sot.tk"
+                    android:path="/oauth_callback"
+                    android:scheme="flatline" />
             </intent-filter>
         </activity>
         <activity android:name=".FlatSetupActivity"
@@ -28,17 +43,7 @@
             android:launchMode="singleTop">
 
             <!-- Allows the launching of this activity from the browser. Used for the OAuth Callback ! -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="flatline-sot.tk"
-                    android:path="/oauth_callback"
-                    android:scheme="flatline" />
-            </intent-filter>
         </activity>
 
     </application>

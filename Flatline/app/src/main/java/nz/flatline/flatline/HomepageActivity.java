@@ -18,8 +18,13 @@ import android.view.MenuItem;
 
 import java.util.Locale;
 
+import nz.flatline.flatline.oauth.OAuthSignInService;
+import nz.flatline.flatline.oauth.OAuthSignInUI;
+import nz.flatline.flatline.oauth.PowershopSignInService;
+import nz.flatline.flatline.tools.AppConstants;
+
 public class HomepageActivity extends AppCompatActivity implements ActionBar.TabListener,
-        HomepageFragment.OnFragmentInteractionListener {
+        HomepageFragment.OnFragmentInteractionListener, OAuthSignInUI {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,16 +41,20 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
      */
     ViewPager mViewPager;
 
+    public OAuthSignInService powershopSignInService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean hasFlat = prefs.getBoolean("FLAT_EXISTS", false);
+        boolean hasFlat = prefs.getBoolean(AppConstants.FLAT_EXISTS, false);
         if(!hasFlat){
             startActivity(new Intent(this, FlatSetupActivity.class));
             finish();
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+        powershopSignInService = new PowershopSignInService(1, this);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -84,6 +93,23 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean(AppConstants.POWERSHOP_CONNECTED, true).commit();
+
+        Uri uri = intent.getData();
+        // check if the request was request using our oauth callback uri
+        if (uri != null && uri.toString().startsWith("flatline://flatline-sot.tk/oauth_callback")) {
+            String oAuthVerifier = uri.getQueryParameter("oauth_verifier");
+
+
+            // pass it on to service to handle
+            powershopSignInService.onTokenVerification(oAuthVerifier);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,13 +129,20 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         if (id == R.id.action_settings) {
             return true;
         } else if ( id == R.id.action_clear_flat){
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean("FLAT_EXISTS", false).commit();
+            removeFlat();
+
             finish();
             startActivity(new Intent(this, HomepageActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void removeFlat() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean(AppConstants.FLAT_EXISTS, false).commit();
+        prefs.edit().putInt(AppConstants.FLAT_ID, -1).commit();
+        prefs.edit().putBoolean(AppConstants.POWERSHOP_CONNECTED, false).commit();
     }
 
     @Override
@@ -130,6 +163,15 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onReceiveAuthorizationURL(String authorizationURL) {
+        // redirect user to their browser where they can log in to powershop
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(authorizationURL));
+        startActivity(browserIntent);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean(AppConstants.POWERSHOP_CONNECTED, true).apply();
     }
 
     /**

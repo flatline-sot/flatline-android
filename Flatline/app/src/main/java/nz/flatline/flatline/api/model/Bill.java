@@ -3,7 +3,9 @@ package nz.flatline.flatline.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public final class Bill {
     public final int id;
@@ -28,6 +30,11 @@ public final class Bill {
         this.cost = cost;
         this.costPerUser = costPerUser;
         this.flat = flat;
+    }
+
+    public String getReadableEndDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy", Locale.getDefault());
+        return sdf.format(endDate);
     }
 
 }
