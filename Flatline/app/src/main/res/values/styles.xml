@@ -5,10 +5,11 @@
         <item name="android:actionBarTabStyle">@style/MyTabStyle</item>
     </style>
 
-    <style name="MyTabStyle" parent="Widget.AppCompat.ActionBar.TabView">
-        <item name="android:background">@drawable/flatline_blue_d</item>
+    <style name="MyTabStyle" parent="Widget.AppCompat.ActionBar.TabBar">
+        <item name="android:backgroundStacked">@drawable/flatline_pink</item>
     </style>
 
+    <drawable name="flatline_pink">#e16386</drawable>
     <drawable name="flatline_blue_d">#3696ad</drawable>
     <color name="flatline_pale_brown">#debf9e</color>
     <color name="flatline_blue">#3696ad</color>

@@ -80,6 +80,7 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
                     actionBar.newTab()
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
+            actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.flatline_blue)));
         }
     }
 
