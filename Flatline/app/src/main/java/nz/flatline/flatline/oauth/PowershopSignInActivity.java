@@ -4,19 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import nz.flatline.flatline.R;
-import nz.flatline.flatline.api.model.Bill;
-import nz.flatline.flatline.api.model.FlatlineRestClient;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+
 
 public class PowershopSignInActivity extends AppCompatActivity implements OAuthSignInUI {
 
@@ -27,37 +21,14 @@ public class PowershopSignInActivity extends AppCompatActivity implements OAuthS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_powershop_sign_in);
 
-        powershopSignInService = new PowershopSignInService(this);
+        powershopSignInService = new PowershopSignInService(1, this);
 
         Button connectWithPowershop = (Button) findViewById(R.id.connect_with_powershop);
 
         connectWithPowershop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 powershopSignInService.requestAuthorizationURL();
-            }
-        });
-
-        FlatlineRestClient client = new FlatlineRestClient("http://104.131.91.223:8000/api");
-
-        Observable<Bill> bill = client.getFlatLineAPI().bill(1);
-
-        bill.subscribeOn(Schedulers.io()).subscribe(new Subscriber<Bill>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                e.printStackTrace();
-                Log.e("FLATLINE", e.getMessage());
-            }
-
-            @Override
-            public void onNext(Bill bill) {
-                Log.d("Flatline", String.valueOf(bill.cost));
             }
         });
     }

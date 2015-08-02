@@ -11,12 +11,18 @@ import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
+import nz.flatline.flatline.api.model.FlatlineRestClient;
+import nz.flatline.flatline.api.model.Okay;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class PowershopSignInService implements OAuthSignInService {
+
+    private int flatID;
+
+    FlatlineRestClient flatLineRestAPI = new FlatlineRestClient("http://104.131.91.223:8000/api");
 
     private OAuthSignInUI oAuthSignInUI;
 
@@ -27,11 +33,13 @@ public class PowershopSignInService implements OAuthSignInService {
 
     private Token accessToken = null;
 
-    public PowershopSignInService(OAuthSignInUI oAuthSignInUI) {
+    public PowershopSignInService(int flatID, OAuthSignInUI oAuthSignInUI) {
+        this.flatID = flatID;
         this.oAuthSignInUI = oAuthSignInUI;
 
         service = new ServiceBuilder()
-                .provider(PowershopAPI.class).apiKey("test").apiSecret("test")
+                .provider(PowershopAPI.class).apiKey("742ea45f6dd448ba5098c4839b13be0c")
+                .apiSecret("PR2tdqgNHG7zt7H2tWlK4h31t48knQum")
                 // note that callback url is defined in android manifest
                 .callback("flatline://flatline-sot.tk/oauth_callback")
                 .build();
@@ -82,17 +90,23 @@ public class PowershopSignInService implements OAuthSignInService {
                     @Override
                     public void call(Token accessToken) {
                         PowershopSignInService.this.accessToken = accessToken;
-                        sendTestRequest();
+                        saveAccessTokens();
                     }
                 });
     }
 
-    private void sendTestRequest() {
-        OAuthRequest request = new
-                OAuthRequest(Verb.GET, "https://stable.test.powershop.co.nz/external_api/v2/accounts.js");
-        service.signRequest(accessToken, request); // the access token from step 4
-        Response response = request.send();
-        Log.d("Flatline", response.getBody());
+    private void saveAccessTokens() {
+        Observable<Okay> observable =
+                flatLineRestAPI.getFlatLineAPI().postAccessTokens(flatID, accessToken.getToken(), accessToken.getSecret());
+
+        Log.d("Flatline", "Sent access tokens to server");
+
+        observable.subscribeOn(Schedulers.io()).subscribe(new Action1<Okay>() {
+            @Override
+            public void call(Okay okay) {
+                Log.d("Flatline", "Received okay from server");
+            }
+        });
     }
 
 }
