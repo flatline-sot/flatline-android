@@ -31,7 +31,7 @@ public class PowershopSignInService implements OAuthSignInService {
         this.oAuthSignInUI = oAuthSignInUI;
 
         service = new ServiceBuilder()
-                .provider(PowershopAPI.class)
+                .provider(PowershopAPI.class).apiKey("test").apiSecret("test")
                 // note that callback url is defined in android manifest
                 .callback("flatline://flatline-sot.tk/oauth_callback")
                 .build();
@@ -95,30 +95,4 @@ public class PowershopSignInService implements OAuthSignInService {
         Log.d("Flatline", response.getBody());
     }
 
-
-    /**
-     * Information about the Powershop API used by the Scribe OAuth Library
-     */
-    private class PowershopAPI extends DefaultApi10a {
-        private static final String BASE_URL = "https://stable.test.powershop.co.nz/external_api/oauth/";
-
-        private static final String REQUEST_TOKEN_URL = BASE_URL + "request_token";
-        private static final String AUTHORIZE_URL = BASE_URL + "authorize?oauth_token=%s";
-        private static final String ACCESS_TOKEN_URL = BASE_URL + "access_token";
-
-        @Override
-        public String getRequestTokenEndpoint() {
-            return REQUEST_TOKEN_URL;
-        }
-
-        @Override
-        public String getAccessTokenEndpoint() {
-            return ACCESS_TOKEN_URL;
-        }
-
-        @Override
-        public String getAuthorizationUrl(Token requestToken) {
-            return String.format(AUTHORIZE_URL, requestToken.getToken());
-        }
-    }
 }
