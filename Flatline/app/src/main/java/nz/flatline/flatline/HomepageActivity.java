@@ -1,8 +1,11 @@
 package nz.flatline.flatline;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -35,14 +38,18 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean hasFlat = prefs.getBoolean("FLAT_EXISTS", false);
+        if(!hasFlat){
+            startActivity(new Intent(this, FlatSetupActivity.class));
+            finish();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.flatline_blue)));
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.flatline_blue)));
-
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Create the adapter that will return a fragment for each of the three
@@ -94,6 +101,11 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if ( id == R.id.action_clear_flat){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.edit().putBoolean("FLAT_EXISTS", false).commit();
+            finish();
+            startActivity(new Intent(this, HomepageActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
