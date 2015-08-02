@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
@@ -34,7 +35,7 @@ public class FlatlineRestClient {
 
     public interface Flatline {
         @GET("/bill/{id}/")
-        Observable<Bill> bill(
+        Observable<List<Bill>> bill(
                 @Path("id") int id);
 
         @POST("/flat/{id}/post_access_tokens/")
