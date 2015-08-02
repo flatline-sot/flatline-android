@@ -97,6 +97,9 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean(AppConstants.POWERSHOP_CONNECTED, true).commit();
+
         Uri uri = intent.getData();
         // check if the request was request using our oauth callback uri
         if (uri != null && uri.toString().startsWith("flatline://flatline-sot.tk/oauth_callback")) {
@@ -126,13 +129,20 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         if (id == R.id.action_settings) {
             return true;
         } else if ( id == R.id.action_clear_flat){
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean("FLAT_EXISTS", false).commit();
+            removeFlat();
+
             finish();
             startActivity(new Intent(this, HomepageActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void removeFlat() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean(AppConstants.FLAT_EXISTS, false).commit();
+        prefs.edit().putInt(AppConstants.FLAT_ID, -1).commit();
+        prefs.edit().putBoolean(AppConstants.POWERSHOP_CONNECTED, false).commit();
     }
 
     @Override
@@ -160,6 +170,8 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
         // redirect user to their browser where they can log in to powershop
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(authorizationURL));
         startActivity(browserIntent);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean(AppConstants.POWERSHOP_CONNECTED, true).apply();
     }
 
     /**

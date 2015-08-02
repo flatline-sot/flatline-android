@@ -19,6 +19,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import nz.flatline.flatline.api.model.Bill;
+import nz.flatline.flatline.api.model.BillUI;
 import nz.flatline.flatline.tools.AppConstants;
 import nz.flatline.flatline.tools.RecyclerItemClickListener;
 
@@ -31,17 +33,18 @@ import nz.flatline.flatline.tools.RecyclerItemClickListener;
  * Use the {@link BillsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BillsFragment extends HomepageFragment {
+public class BillsFragment extends HomepageFragment implements BillUI{
 
 
-    private final List<Bill> MOCK_DATA = new ArrayList<Bill>(){{
-        add(new Bill("$24.39", "Powershop", "$97.58 total due","7/08/15", new ArrayList<Drawable>()));
-        add(new Bill("$27.25", "Vodafone", "$109.00 total due","15/08/15", new ArrayList<Drawable>()));
+    private final List<BillModel> MOCK_DATA = new ArrayList<BillModel>(){{
+        add(new BillModel("$24.39", "Powershop", "$97.58 total due","7/08/15", new ArrayList<Drawable>()));
+        add(new BillModel("$27.25", "Vodafone", "$109.00 total due","15/08/15", new ArrayList<Drawable>()));
     }};
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Button powershopButton;
 
 
     /**
@@ -67,45 +70,42 @@ public class BillsFragment extends HomepageFragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bills, container, false);
 
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.bills_recycler_view);
+        powershopButton = (Button) v.findViewById(R.id.connect_with_powershop);
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         boolean connectedToPowershop = prefs.getBoolean(AppConstants.POWERSHOP_CONNECTED, false);
-        if (connectedToPowershop) { //flat not connected to powershop
-            v.findViewById(R.id.bills_recycler_view).setVisibility(View.GONE);
-            Button connectButton = (Button) v.findViewById(R.id.connect_with_powershop);
-            connectButton.setVisibility(View.VISIBLE);
-            connectButton.setOnClickListener(new View.OnClickListener() {
+
+        if (!connectedToPowershop) { //flat not connected to powershop
+            mRecyclerView.setVisibility(View.GONE);
+            powershopButton.setVisibility(View.VISIBLE);
+            powershopButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     HomepageActivity homepageActivity =(HomepageActivity)getActivity();
                     homepageActivity.powershopSignInService.requestAuthorizationURL();
                 }
             });
-        }else {
-
-
-            mRecyclerView = (RecyclerView) v.findViewById(R.id.bills_recycler_view);
-            mRecyclerView.addOnItemTouchListener(
-                    new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Log.i("RecyclerView", "item clicked, postion:" + position);
-                            buildAlert(view, position);
-                        }
-                    })
-            );
-
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            mRecyclerView.setHasFixedSize(true);
-
-            // use a linear layout manager
-            mLayoutManager = new LinearLayoutManager(this.getActivity());
-            mRecyclerView.setLayoutManager(mLayoutManager);
-
-            // specify an adapter (see also next example)
-            mAdapter = new BillsAdapter(MOCK_DATA);
-            mRecyclerView.setAdapter(mAdapter);
         }
+
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Log.i("RecyclerView", "item clicked, postion:" + position);
+                        buildAlert(view, position);
+                    }
+                })
+        );
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
         return v;
     }
 
@@ -129,14 +129,23 @@ public class BillsFragment extends HomepageFragment {
         dialog.show();
     }
 
-    private class Bill{
+    @Override
+    public void onBillsReceived(List<Bill> bills) {
+        mAdapter = new BillsAdapter(bills);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        powershopButton.setVisibility(View.GONE);
+
+    }
+
+    private class BillModel {
         protected String youOwe;
         protected String company;
         protected String totalDue;
         protected String dateDue;
         protected List<Drawable> flatmatesBilled;
 
-        public Bill(String youOwe, String company, String totalDue, String dateDue, List<Drawable> flatmatesBilled) {
+        public BillModel(String youOwe, String company, String totalDue, String dateDue, List<Drawable> flatmatesBilled) {
             this.company = company;
             this.dateDue = dateDue;
             this.flatmatesBilled = flatmatesBilled;
@@ -186,10 +195,10 @@ public class BillsFragment extends HomepageFragment {
 
             Bill bill = billsList.get(position);
 
-            billViewHolder.youOweTextView.setText(bill.youOwe);
-            billViewHolder.companyTextView.setText(bill.company);
-            billViewHolder.totalDueTextView.setText(bill.totalDue);
-            billViewHolder.dateDue.setText(bill.dateDue);
+            billViewHolder.youOweTextView.setText(String.valueOf(bill.costPerUser));
+            billViewHolder.companyTextView.setText("Powershop");
+            billViewHolder.totalDueTextView.setText(String.valueOf(bill.cost));
+            billViewHolder.dateDue.setText(bill.getReadableEndDate());
 
         }
 

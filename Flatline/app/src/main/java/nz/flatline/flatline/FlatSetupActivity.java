@@ -51,6 +51,7 @@ public class FlatSetupActivity extends Activity implements View.OnClickListener{
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             prefs.edit().putInt(AppConstants.FLAT_ID, 1).commit();
             prefs.edit().putBoolean(AppConstants.FLAT_EXISTS, true).commit();
+            prefs.edit().putBoolean(AppConstants.POWERSHOP_CONNECTED, false).apply();
             startActivity(new Intent(this, HomepageActivity.class));
             finish();
         }
