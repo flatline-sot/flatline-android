@@ -2,8 +2,10 @@ package nz.flatline.flatline;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import nz.flatline.flatline.tools.AppConstants;
 import nz.flatline.flatline.tools.RecyclerItemClickListener;
 
 
@@ -64,7 +67,9 @@ public class BillsFragment extends HomepageFragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bills, container, false);
 
-        if(false){ //flat not connected to powershop
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        boolean connectedToPowershop = prefs.getBoolean(AppConstants.POWERSHOP_CONNECTED, false);
+        if (connectedToPowershop) { //flat not connected to powershop
             v.findViewById(R.id.bills_recycler_view).setVisibility(View.GONE);
             Button connectButton = (Button) v.findViewById(R.id.connect_with_powershop);
             connectButton.setVisibility(View.VISIBLE);

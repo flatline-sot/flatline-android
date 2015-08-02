@@ -3,18 +3,15 @@ package nz.flatline.flatline;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import nz.flatline.flatline.tools.AppConstants;
 
 /**
  * Created by Mayur on 1/08/2015.
@@ -52,7 +49,8 @@ public class FlatSetupActivity extends Activity implements View.OnClickListener{
             Toast.makeText(FlatSetupActivity.this, "Please enter a flat name!", Toast.LENGTH_SHORT).show();
         } else {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean("FLAT_EXISTS" ,true).commit();
+            prefs.edit().putInt(AppConstants.FLAT_ID, 1).commit();
+            prefs.edit().putBoolean(AppConstants.FLAT_EXISTS, true).commit();
             startActivity(new Intent(this, HomepageActivity.class));
             finish();
         }

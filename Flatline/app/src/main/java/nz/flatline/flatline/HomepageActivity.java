@@ -21,6 +21,7 @@ import java.util.Locale;
 import nz.flatline.flatline.oauth.OAuthSignInService;
 import nz.flatline.flatline.oauth.OAuthSignInUI;
 import nz.flatline.flatline.oauth.PowershopSignInService;
+import nz.flatline.flatline.tools.AppConstants;
 
 public class HomepageActivity extends AppCompatActivity implements ActionBar.TabListener,
         HomepageFragment.OnFragmentInteractionListener, OAuthSignInUI {
@@ -45,7 +46,7 @@ public class HomepageActivity extends AppCompatActivity implements ActionBar.Tab
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean hasFlat = prefs.getBoolean("FLAT_EXISTS", false);
+        boolean hasFlat = prefs.getBoolean(AppConstants.FLAT_EXISTS, false);
         if(!hasFlat){
             startActivity(new Intent(this, FlatSetupActivity.class));
             finish();
